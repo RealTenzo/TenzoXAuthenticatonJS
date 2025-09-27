@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>example login</title>
+</head>
+<body>
+
+<h2>Login / Register</h2>
+
+<div>
+    <input type="text" id="username" placeholder="Username"><br><br>
+    <input type="password" id="password" placeholder="Password"><br><br>
+    <input type="text" id="license" placeholder="License (for registration)"><br><br>
+    <button onclick="loginUser()">Login</button>
+    <button onclick="registerUser()">Register</button>
+</div>
+
+<p id="status"></p>
+
+<!-- Include TenzoAuth JS -->
+<script src="tenzoauth.js"></script>
+<script>
+const auth = new TenzoAuth("1.0", "appname", "secret");
+
+// Login handler
+async function loginUser() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const success = await auth.login(username, password);
+    document.getElementById("status").textContent = auth.getLastStatusMessage();
+}
+
+// Register handler
+async function registerUser() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const license = document.getElementById("license").value;
+    const success = await auth.register(username, password, license);
+    document.getElementById("status").textContent = auth.getLastStatusMessage();
+}
+</script>
+
+</body>
+</html>
